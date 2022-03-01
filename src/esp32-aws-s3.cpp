@@ -6,6 +6,9 @@
 #include <esp32-aws-s3.h>
 #include <SD_MMC.h>
 
+String AWS_S3::_bucket;
+String AWS_S3::_access_key;
+String AWS_S3::_secret_key;
 
 void AWS_S3::setup(String access_key, String secret_key, String bucket) {
     _bucket = bucket;
