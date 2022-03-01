@@ -165,7 +165,7 @@ String AWS_S3::signKey()
     const char* region = "eu-west-2";
     const char* service = "s3";
     const char* req = "aws4_request";
-    const char * secret_key = String("AWS4") + _secret_key;
+    const char * secret_key = (String("AWS4") + _secret_key).c_str();
     Serial.println(secret_key);
     String hex1 = hmac256((const byte*)(secret_key), strlen(secret_key), (const byte*)buf2, strlen(buf2));
     fromHex(hex1, h1);
