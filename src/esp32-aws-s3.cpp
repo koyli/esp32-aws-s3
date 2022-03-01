@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "HTTPClient.h"
 #include "mbedtls/md.h"
 #include <time.h>
