@@ -2,6 +2,7 @@
 #include "mbedtls/md.h"
 #include <time.h>
 #include <esp32-aws-s3.h>
+#include <SD_MMC.h>
 
 
 String sha256(const byte* payload, unsigned int len)
@@ -193,7 +194,7 @@ String auth(String sig) {
     return ah;
 }
 
-int put(String path, const byte payload[], int length)
+int AWS_S3::put(String path, const byte payload[], int length)
 {
 
     String can = canonicalRequest(String("PUT"), path, payload, length);
@@ -224,7 +225,7 @@ int put(String path, const byte payload[], int length)
 #define PAYLOAD_MAX 8192
 byte transferBuff[PAYLOAD_MAX];
 
-int put(String path, File payload)
+int AWS_S3::put(String path, File payload)
 {
     
     

@@ -1,5 +1,8 @@
 #include <SD.h>
 
-extern int put(String path, File payload);
-extern int put(String path, const byte payload[], int length);
+class AWS_S3 {
+ public:
+    int put(String path, File payload);
+    int put(String path, const byte payload[], int length);
+};
 
