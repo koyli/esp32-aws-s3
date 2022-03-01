@@ -6,3 +6,4 @@ class AWS_S3 {
     static int put(String path, const byte payload[], int length);
 };
 
+extern AWS_S3;
