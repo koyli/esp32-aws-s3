@@ -1,0 +1,18 @@
+{
+    "name" : "aws-s3-util",
+    "version" : "1.0.0",
+    "description" : "Utils for upload to S3",
+    "repository" :
+    {
+        "type" : "git",
+        "url" : "https://github.com/koyli/esp32-aws-s3.git"
+    },
+    "dependencies" : {
+        "HTTPClient" : "~1.2"
+    },
+    "license" : "MIT",
+    "platforms" : "*",
+    "frameworks" : "*"
+}
+        
+   
