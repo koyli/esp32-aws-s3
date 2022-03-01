@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "HTTPClient.h"
 #include "mbedtls/md.h"
 #include <time.h>
@@ -7,6 +6,10 @@
 #include <esp32-aws-s3.h>
 #include <SD_MMC.h>
 
+
+void AWS_S3::setup(String bucket) {
+    _bucket = bucket;
+}
 
 String sha256(const byte* payload, unsigned int len)
 {
@@ -71,7 +74,7 @@ void fromHex(String s, byte* b)
 
 String dateHeader;
 
-String canonicalRequest(String req, String path, const byte payload[], int length) {
+String AWS_S3::canonicalRequest(String req, String path, const byte payload[], int length) {
 
     unsigned long t = now();
 
@@ -88,7 +91,7 @@ String canonicalRequest(String req, String path, const byte payload[], int lengt
     String r = req +"\n"; 
     r += filename + "\n";		/* CanonicalURI */
     r += String("\n");		/* CanonicalQueryString */
-    r += String("host:" BUCKET "\n");		/* CanonicalHeaders */
+    r += String("host:") + _bucket + String( "\n");		/* CanonicalHeaders */
     r += String("x-amz-content-sha256:") + hash + "\n";
     r += String( "x-amz-date:") + dateHeader + "\n";
     r += "\n";
@@ -98,7 +101,7 @@ String canonicalRequest(String req, String path, const byte payload[], int lengt
     return r;
 }
 
-String canonicalUnsignedRequest(String req, String path, int length) {
+String AWS_S3::canonicalUnsignedRequest(String req, String path, int length) {
 
     unsigned long t = now();
 
@@ -113,7 +116,7 @@ String canonicalUnsignedRequest(String req, String path, int length) {
     String r = req +"\n"; 
     r += filename + "\n";		/* CanonicalURI */
     r += String("\n");		/* CanonicalQueryString */
-    r += String("host:" BUCKET "\n");		/* CanonicalHeaders */
+    r += String("host:") +  _bucket + ( "\n");		/* CanonicalHeaders */
     r += String("x-amz-content-sha256:") + "UNSIGNED-PAYLOAD" + "\n";
     r += String( "x-amz-date:") + dateHeader + "\n";
     r += "\n";
