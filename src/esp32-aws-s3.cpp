@@ -1,6 +1,8 @@
 #include "HTTPClient.h"
 #include "mbedtls/md.h"
 #include <time.h>
+#include <TimeLib.h>
+
 #include <esp32-aws-s3.h>
 #include <SD_MMC.h>
 
