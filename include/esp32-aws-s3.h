@@ -7,7 +7,7 @@ class AWS_S3 {
  private:
     static String canonicalUnsignedRequest(String req, String path, int length) ;
 
-    static canonicalRequest(String req, String path, const byte payload[], int length);
+    static String canonicalRequest(String req, String path, const byte payload[], int length);
 
  public:
     static int setup(String bucket);
