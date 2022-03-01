@@ -7,8 +7,10 @@
 #include <SD_MMC.h>
 
 
-void AWS_S3::setup(String bucket) {
+void AWS_S3::setup(String access_key, String secret_key, String bucket) {
     _bucket = bucket;
+    _access_key = access_key;
+    _secret_key = secret_key;
 }
 
 String sha256(const byte* payload, unsigned int len)
@@ -149,7 +151,7 @@ String toSign(String msg)
   
 }
 
-String signKey()
+String AWS_S3::signKey()
 {
     unsigned long t = now();
     char buf1[20];
@@ -163,7 +165,7 @@ String signKey()
     const char* region = "eu-west-2";
     const char* service = "s3";
     const char* req = "aws4_request";
-    const char * secret_key = "AWS4" SECRET_KEY;
+    const char * secret_key = String("AWS4") + _secret_key;
     Serial.println(secret_key);
     String hex1 = hmac256((const byte*)(secret_key), strlen(secret_key), (const byte*)buf2, strlen(buf2));
     fromHex(hex1, h1);
@@ -176,13 +178,13 @@ String signKey()
     return hmac256(h3, 32, (byte*)req, strlen(req));
 }
 
-String sign(String key, String msg) {
+static String sign(String key, String msg) {
     byte b[32];
     fromHex(key, b);
     return hmac256(b, 32, (const byte*) msg.c_str(), msg.length());
 }
 
-String auth(String sig) {
+String AWS_S3::auth(String sig) {
   
     unsigned long t = now();
 
@@ -190,7 +192,7 @@ String auth(String sig) {
     sprintf(buf2, "%04d%02d%02d",  year(t),month(t), day(t));
   
     String ah = "AWS4-HMAC-SHA256 ";
-    ah += "Credential=" ACCESS_KEY;
+    ah += String("Credential=") +  _access_key;
     ah += "/";
     ah += buf2;
     ah += "/eu-west-2/s3/aws4_request, ";
