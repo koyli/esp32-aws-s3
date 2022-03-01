@@ -15,7 +15,7 @@ class AWS_S3 {
     static String canonicalRequest(String req, String path, const byte payload[], int length);
 
  public:
-    static int setup(String access_key, String secret_key, String bucket);
+    static void setup(String access_key, String secret_key, String bucket);
     static int put(String path, File payload);
     static int put(String path, const byte payload[], int length);
 };
