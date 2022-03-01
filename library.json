@@ -8,7 +8,8 @@
         "url" : "https://github.com/koyli/esp32-aws-s3.git"
     },
     "dependencies" : {
-        "amcewen/HTTPClient" : "~2.2.0"
+        "amcewen/HTTPClient" : "~2.2.0",
+        "WiFiClientSecure" : "1.0"
     },
     "license" : "MIT",
     "platforms" : "*",
