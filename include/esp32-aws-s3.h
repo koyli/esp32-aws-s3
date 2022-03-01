@@ -2,7 +2,7 @@
 
 class AWS_S3 {
  public:
-    int put(String path, File payload);
-    int put(String path, const byte payload[], int length);
+    static int put(String path, File payload);
+    static int put(String path, const byte payload[], int length);
 };
 
