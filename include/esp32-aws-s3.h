@@ -1,5 +1,5 @@
 #include <SD.h>
 
-int put(String path, File payload);
-int put(String path, const byte payload[], int length);
+extern int put(String path, File payload);
+extern int put(String path, const byte payload[], int length);
 
