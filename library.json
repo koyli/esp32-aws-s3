@@ -1,15 +1,13 @@
 {
-    "name" : "aws-s3-util",
+    "name" : "esp32-cam-utils",
     "version" : "1.0.0",
     "description" : "Utils for upload to S3",
     "repository" :
     {
         "type" : "git",
-        "url" : "https://github.com/koyli/esp32-aws-s3.git"
+        "url" : "https://github.com/koyli/esp32-cam-utils.git"
     },
     "dependencies" : {
-        "amcewen/HTTPClient" : "~2.2.0",
-        "WiFiClientSecure" : "1.0"
     },
     "license" : "MIT",
     "platforms" : "*",
