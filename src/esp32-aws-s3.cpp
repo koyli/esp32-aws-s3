@@ -1,4 +1,4 @@
-#include "HTTPClient.h"
+#include <HTTPClient.h>
 #include "mbedtls/md.h"
 #include <time.h>
 #include <TimeLib.h>
@@ -222,7 +222,7 @@ int AWS_S3::put(String path, const byte payload[], int length)
     Serial.print("Signed:");
     Serial.println(sign(skey, sts));
     HTTPClient http;
-    http.begin(String("http://net.lecomber.cctv.s3.eu-west-2.amazonaws.com") + path);
+    http.begin(_bucket + String("/") + path);
     http.addHeader("Authorization", auth(sign(skey, sts)));
     http.addHeader("x-amz-content-sha256", sha256(payload, length));
     http.addHeader("x-amz-date", dateHeader);
@@ -257,14 +257,15 @@ int AWS_S3::put(String path, File payload)
     Serial.println(payload.size());
     
     HTTPClient http;
-    http.begin(String("http://net.lecomber.cctv.s3.eu-west-2.amazonaws.com") + path);
+    http.begin(_bucket + String("/") + path);
     http.addHeader("Authorization", auth(sign(skey, sts)));
     http.addHeader("x-amz-content-sha256", "UNSIGNED-PAYLOAD");
     http.addHeader("x-amz-date", dateHeader);
     Serial.println("Sending.. " );
 
     if (payload.size() > 0) {
-        http.sendRequest("PUT", &payload, payload.size());
+        int r = http.sendRequest("PUT", &payload, payload.size());
+        Serial.println(r);
     }
     Serial.print("File sent: ");
     Serial.println(path);
