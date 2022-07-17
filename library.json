@@ -7,8 +7,7 @@
         "type" : "git",
         "url" : "https://github.com/koyli/esp32-cam-utils.git"
     },
-    "dependencies" : {
-    },
+    "dependencies" : [],
     "license" : "MIT",
     "platforms" : "*",
     "frameworks" : "*"
