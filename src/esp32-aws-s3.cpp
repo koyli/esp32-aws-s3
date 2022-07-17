@@ -221,6 +221,7 @@ int AWS_S3::put(String path, const byte payload[], int length)
     Serial.println(skey);
     Serial.print("Signed:");
     Serial.println(sign(skey, sts));
+
     HTTPClient http;
     http.begin(String("http://")+ _bucket + path);
     http.addHeader("Authorization", auth(sign(skey, sts)));
@@ -270,7 +271,7 @@ int AWS_S3::put(String path, File payload)
     }
     Serial.print("File sent: ");
     Serial.println(path);
-
+    
     return r == 200;
     
 }
