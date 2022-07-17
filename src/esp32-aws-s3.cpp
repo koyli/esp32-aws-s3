@@ -222,14 +222,15 @@ int AWS_S3::put(String path, const byte payload[], int length)
     Serial.print("Signed:");
     Serial.println(sign(skey, sts));
     HTTPClient http;
-    http.begin(_bucket + String("/") + path);
+    http.begin(String("http://")+ _bucket + path);
     http.addHeader("Authorization", auth(sign(skey, sts)));
     http.addHeader("x-amz-content-sha256", sha256(payload, length));
     http.addHeader("x-amz-date", dateHeader);
-    http.sendRequest("PUT", (unsigned char*)payload, length);
-
+    int r = http.sendRequest("PUT", (unsigned char*)payload, length);
+    
     Serial.println(http.getString());
-    return -1;
+    Serial.println(r);
+    return r == 200;
     
 }
 
@@ -257,20 +258,20 @@ int AWS_S3::put(String path, File payload)
     Serial.println(payload.size());
     
     HTTPClient http;
-    http.begin(_bucket + String("/") + path);
+    http.begin(String("http://")+ _bucket + path);
     http.addHeader("Authorization", auth(sign(skey, sts)));
     http.addHeader("x-amz-content-sha256", "UNSIGNED-PAYLOAD");
     http.addHeader("x-amz-date", dateHeader);
     Serial.println("Sending.. " );
-
+    int r = 200;
     if (payload.size() > 0) {
-        int r = http.sendRequest("PUT", &payload, payload.size());
+        r = http.sendRequest("PUT", &payload, payload.size());
         Serial.println(r);
     }
     Serial.print("File sent: ");
     Serial.println(path);
 
-    return -1;
+    return r == 200;
     
 }
 
