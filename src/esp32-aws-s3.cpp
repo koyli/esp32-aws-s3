@@ -269,7 +269,8 @@ int AWS_S3::put(String path, File payload)
         r = http.sendRequest("PUT", &payload, payload.size());
         Serial.println(r);
     }
-    Serial.print("File sent: ");
+    if (r == 200) Serial.print("File sent: ");
+    else Serial.print("Failed to send file");
     Serial.println(path);
     
     return r == 200;
